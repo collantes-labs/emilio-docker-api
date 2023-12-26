@@ -1,0 +1,37 @@
+version: '3.9'
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-postgre: {}
+
+services:
+  postgresdb:
+    image: postgres:16.1
+    restart: always
+    container_name: container_psql
+    hostname: host_psql
+    env_file: ./.env
+    networks:
+      - app-network
+    expose:
+      - $POSTGRES_DOCKER_PORT
+    ports:
+      - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT
+    volumes:
+      - ./sql/create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
+      - ./sql/data.sql:/docker-entrypoint-initdb.d/data.sql
+
+  api:
+    build: .
+    depends_on:
+      - postgresdb
+    links:
+      - postgresdb
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    volumes:
+      - .:/app
+    command: npm run start:dev
