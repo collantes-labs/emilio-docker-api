@@ -5,14 +5,14 @@ networks:
     driver: bridge
 
 volumes:
-  db-postgre: {}
+  postgresdb: {}
 
 services:
   postgresdb:
     image: postgres:16.1
     restart: always
     container_name: container_psql
-    hostname: host_psql
+    hostname: postgresdb
     env_file: ./.env
     networks:
       - app-network
@@ -30,6 +30,8 @@ services:
       - postgresdb
     links:
       - postgresdb
+    networks:
+      - app-network
     ports:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
     volumes:
