@@ -9,6 +9,7 @@ import { ProductsService } from './products.service';
       TypeOrmModule.forFeature([Product])
     ],
     controllers: [ProductsController],
-    providers: [ProductsService]
+    providers: [ProductsService],
+    exports: [ProductsService]
   })
   export class ProductsModule {}
