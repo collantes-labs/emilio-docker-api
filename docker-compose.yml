@@ -24,13 +24,13 @@ services:
       - ./sql/create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
       - ./sql/data.sql:/docker-entrypoint-initdb.d/data.sql
 
-  api:
-    build: .
-    depends_on:
-      - postgresdb
-    links:
-      - postgresdb
-    networks:
-      - app-network
-    ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+  # api:
+  #   build: .
+  #   depends_on:
+  #     - postgresdb
+  #   links:
+  #     - postgresdb
+  #   networks:
+  #     - app-network
+  #   ports:
+  #     - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
