@@ -34,4 +34,12 @@ export class ProductsService {
     return product as DeepPartial<Product>;
   }
 
+  async createProduct(product: Product) {
+    return this.productsRepository.save(product);
+  }
+
+  async deleteProduct(id: number) {
+    await this.productsRepository.delete({id});
+  }
+
 }
